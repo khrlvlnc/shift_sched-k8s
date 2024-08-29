@@ -9,13 +9,13 @@ encode_data() {
 }
  
 # Clear the file if it already exists
-> $output_file
+>> $output_file
  
 while true; do
   read -p "Enter name: " name
   if [[ "$name" == "print" ]]; then
     echo -e "\n--- Encoded Data ---"
-    cat $output_file
+    cat $output_file | grep mid: | awk -F: '{print $1, $2}'
     echo -e "\nExiting..."
     exit 0
   fi
