@@ -51,6 +51,7 @@ while true; do
       break
     else
       echo "Invalid shift. Please enter 'morning', 'mid', or 'night'."
+      exit 1
     fi
   done
  
@@ -61,6 +62,7 @@ while true; do
       break
     else
       echo "Invalid team. Please enter a valid team code (e.g., a1, b2, etc.)."
+      exit 1
     fi
   done
  
