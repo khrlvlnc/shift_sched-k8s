@@ -3,3 +3,6 @@ john:mid:a2
 manalang:night:b1
 erwin:morning:c2
 erwin:night:c2
+erwin:mid:a1
+ewen:mid:a1
+proint:mid:a2
