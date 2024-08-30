@@ -1,42 +1,37 @@
 #!/bin/bash
- 
+
 # File to store encoded data
 output_file="input.txt"
- 
+
 # Function to encode the input
 encode_data() {
-  echo "$1:$2:$3"
+	echo "$1:$2:$3"
 }
- 
 
 # Fixed indentation
 # Clear the file if it already exists
 >>$output_file
 
-# Read the input.txt cat input.txt | grep team | grep -wc shift
+# Function to check the number of people for a given team and shift
+check_limit() {
+	local team="$1"
+	local shift="$2"
+	local count
 
-# function for calling
+	count=$(grep -i "$team" "$output_file" | grep -i "$shift" | wc -l)
+	if [ "$count" -ge 2 ]; then
+		echo "Limit reached for $team in $shift shift."
+		return 1
+	else
+		return 0
+	fi
+}
 
-max_number() {
-	cat $output_file | grep -i a1 | grep -i morning | wc -l
-	cat $output_file | grep -i a1 | grep -i mid | wc -l
-	cat $output_file | grep -i a1 | grep -i night | wc -l
-
-	cat $output_file | grep -i a2 | grep -i morning | wc -l
-	cat $output_file | grep -i a2 | grep -i mid | wc -l
-	cat $output_file | grep -i a2 | grep -i night | wc -l
-
-	cat $output_file | grep -i b1 | grep -i morning | wc -l
-	cat $output_file | grep -i b1 | grep -i mid | wc -l
-	cat $output_file | grep -i b1 | grep -i night | wc -l
-
-	cat $output_file | grep -i b2 | grep -i morning | wc -l
-	cat $output_file | grep -i b2 | grep -i mid | wc -l
-	cat $output_file | grep -i b2 | grep -i night | wc -l
-
-	cat $output_file | grep -i b3 | grep -i morning | wc -l
-	cat $output_file | grep -i b3 | grep -i mid | wc -l
-	cat $output_file | grep -i b3 | grep -i night | wc -l
+# Function to get the total number of people for all teams and shifts
+total_count() {
+	local total
+	total=$(grep -i "$1" "$output_file" | grep -i "$2" | wc -l)
+	echo "$total"
 }
 
 while true; do
@@ -102,9 +97,15 @@ while true; do
 		fi
 	done
 
-	# Encode the input and store it in the file
-	encoded_data=$(encode_data "$name" "$shift" "$team")
-	echo "$encoded_data" >>$output_file
+	# Check if adding a new entry exceeds the limit
+	if check_limit "$team" "$shift"; then
+		# Encode the input and store it in the file
+		encoded_data=$(encode_data "$name" "$shift" "$team")
+		echo "$encoded_data" >>$output_file
 
-	echo "Data encoded and stored."
+		echo "Data encoded and stored."
+	else
+		echo "Cannot add more people to $team in $shift shift."
+		exit 1
+	fi
 done
