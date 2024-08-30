@@ -9,6 +9,7 @@ encode_data() {
 }
  
 
+# Fixed indentation
 # Clear the file if it already exists
 >>$output_file
 
