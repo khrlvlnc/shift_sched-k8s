@@ -1,59 +1,108 @@
 #!/bin/bash
 
+# File to store encoded data
+output_file="input.txt"
 
-#max people per shift per team
-MAX_PER_SHIFT=2
+# Function to encode the input
+encode_data() {
+	echo "$1:$2:$3"
+}
 
-#List of valid shifts and teams
-VALID_SHIFTS=("Morning", "Mid", "Night")
-VALID_TEAMS=("A1" "A2" "B1" "B2" B3")
+# Clear the file if it already exists
+>>$output_file
 
-#Output file for storing user inputs
-STORAGE_FILE="shift_schedule_storage.txt
+# Read the input.txt cat input.txt | grep team | grep -wc shift
 
+# function for calling
 
+max_number() {
+	cat $output_file | grep -i a1 | grep -i morning | wc -l
+	cat $output_file | grep -i a1 | grep -i mid | wc -l
+	cat $output_file | grep -i a1 | grep -i night | wc -l
 
-#Logic to make inputs persistent
-if [[ -f $STORAGE_FILE ]];
-then
-	while IFS=, read -r name shift team;
-	do
-		key="${team}_${shift}"
-		team_shifts[$key]=$((team_shifts[$key] + 1))
-	done < "$STORAGE_FILE"
-fi
+	cat $output_file | grep -i a2 | grep -i morning | wc -l
+	cat $output_file | grep -i a2 | grep -i mid | wc -l
+	cat $output_file | grep -i a2 | grep -i night | wc -l
 
+	cat $output_file | grep -i b1 | grep -i morning | wc -l
+	cat $output_file | grep -i b1 | grep -i mid | wc -l
+	cat $output_file | grep -i b1 | grep -i night | wc -l
 
-# write a function  here for error handling or validating of input name,shift,team
+	cat $output_file | grep -i b2 | grep -i morning | wc -l
+	cat $output_file | grep -i b2 | grep -i mid | wc -l
+	cat $output_file | grep -i b2 | grep -i night | wc -l
 
+	cat $output_file | grep -i b3 | grep -i morning | wc -l
+	cat $output_file | grep -i b3 | grep -i mid | wc -l
+	cat $output_file | grep -i b3 | grep -i night | wc -l
+}
 
+while true; do
 
-
-
-# Loop for entering shecdule
-
-while true;
-do
 	read -p "Enter name: " name
-	read -p "Enter shift: " shift
-	read -p "Enter team: " team
+	name=$(echo "$name" | tr '[:lower:]' '[:upper:]')
 
+	if [[ "$name" == "PRINT" ]]; then
 
-	# Instance when user input is "print".
-	if [[ $name == "print" ]]; then
-		
-		#Write a code about printing all input names, shifts, teams
-		#example: cat $STORAGE_FILE 
+		echo -e "\n--- Encoded Data ---"
+		echo -e "\n--- A1 ---"
+		cat $output_file | grep -i a1 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
+		cat $output_file | grep -i a1 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
+		cat $output_file | grep -i a1 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
 
-		echo "Exiting the loop"
-		break
+		echo -e "\n--- A2 ---"
+		cat $output_file | grep -i a2 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
+		cat $output_file | grep -i a2 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
+		cat $output_file | grep -i a2 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
+
+		echo -e "\n--- B1 ---"
+		cat $output_file | grep -i b1 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
+		cat $output_file | grep -i b1 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
+		cat $output_file | grep -i b1 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
+
+		echo -e "\n--- B2 ---"
+		cat $output_file | grep -i b2 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
+		cat $output_file | grep -i b2 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
+		cat $output_file | grep -i b2 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
+
+		echo -e "\n--- B3 ---"
+		cat $output_file | grep -i b3 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
+		cat $output_file | grep -i b3 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
+		cat $output_file | grep -i b3 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
+
+		echo -e "\nExiting..."
+		exit 0
 	fi
 
-	
-	#Write a code here to validate the inputs, you can call the function you created
+	# Validate shift input
+	while true; do
+		read -p "Enter shift (morning/mid/night): " shift
+		shift=$(echo "$shift" | tr '[:lower:]' '[:upper:]')
 
-	
-						
+		if [[ "$shift" == "MORNING" || "$shift" == "MID" || "$shift" == "NIGHT" ]]; then
+			break
+		else
+			echo "Invalid shift. Please enter 'morning', 'mid', or 'night'."
+			exit 1
+		fi
+	done
+
+	# Validate team input
+	while true; do
+		read -p "Enter team (a1, a2, b1, b2, b3): " team
+		team=$(echo "$team" | tr '[:lower:]' '[:upper:]')
+
+		if [[ "$team" == "A1" || "$team" == "A2" || "$team" == "B1" || "$team" == "B2" || "$team" == "B3" ]]; then
+			break
+		else
+			echo "Invalid team. Please enter a valid team code (e.g., a1, b2, etc.)."
+			exit 1
+		fi
+	done
+
+	# Encode the input and store it in the file
+	encoded_data=$(encode_data "$name" "$shift" "$team")
+	echo "$encoded_data" >>$output_file
+
+	echo "Data encoded and stored."
 done
-
-echo "Shift schedule completed."
