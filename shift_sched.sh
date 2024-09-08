@@ -86,6 +86,11 @@ while true; do
 		exit 0
 	fi
 
+	if [[ "$name" == "DELETE" ]]; then
+   	>$output_file
+   	exit 0
+   	fi
+
 	# Validate shift input
 	while true; do
 		read -p "$(echo -e "\n${Bold_Green}Enter Shift ${Text_Yellow}(MORNING, MID, NIGHT)${No_Color}: ")" shift
