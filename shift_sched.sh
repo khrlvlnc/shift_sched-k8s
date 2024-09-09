@@ -30,7 +30,7 @@ check_limit() {
 
 	count=$(grep -i "$team" "$output_file" | grep -i "$shift" | wc -l)
 	if [ "$count" -ge 2 ]; then
-		echo "Limit reached for $team in $shift shift."
+		echo -e "\n${RED}Limit reached for ${YELLOW}$team ${RED}in ${YELLOW}$shift ${RED}shift."
 		return 1
 	else
 		return 0
