@@ -5,18 +5,20 @@ output_file="input.txt"
 
 # Function to encode the input
 encode_data() {
-	echo -e "${GREEN}$1${NC}:${YELLOW}$2${NC}:${BLUE}$3"
+	echo -e "${Text_Green}$1${No_Color}:${Text_Yellow}$2${No_Color}:${Text_Blue}$3"
 }
 
 # Define color and text formatting codes
-BLUE='\033[0;34m'
-BOLD='\033[1m'
-UNDERLINE='\033[4m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color or Reset
-THUMBS_UP="👍"
+Text_Blue='\033[0;34m'
+Text_Bold='\033[1m'
+Underline='\033[4m'
+Text_Green='\033[0;32m'
+Text_Yellow='\033[1;33m'
+Text_Red='\033[0;31m'
+No_Color='\033[0m' # No Color or Reset
+Combo_Text="${Text_Blue}${Text_Bold}${Underline}"
+Bold_Green="${Text_Green}${Text_Bold}"
+Thumbs_up="👍"
 
 # Clear the file if it already exists
 >>$output_file
@@ -46,69 +48,74 @@ total_count() {
 	echo "$total"
 
 }
-
+	echo 'To delete, type "Delete"'
 while true; do
 
-	read -p "$(echo -e "\n${BLUE}${BOLD}${UNDERLINE}=============================${NC}\n${GREEN}${BOLD}Enter Name:${NC} ")" name
+	read -p "$(echo -e "\n${Combo_Text}=============================${No_Color}\n${Bold_Green}Enter Name:${No_Color} ")" name
 	name=$(echo "$name" | tr '[:lower:]' '[:upper:]')
 
 	if [[ "$name" == "PRINT" ]]; then
 
-		echo -e "\n${BLUE}${BOLD}${UNDERLINE}=============================${YELLOW}ENCODED DATA${BLUE}${BOLD}${UNDERLINE}=============================${NC}"
-		echo -e "\n${BLUE}${BOLD}${UNDERLINE}--- ${YELLOW}A1 ${BLUE}${BOLD}${UNDERLINE}---${NC}"
+		echo -e "\n${Combo_Text}=============================${Text_Yellow}ENCODED DATA${Combo_Text}=============================${No_Color}"
+		echo -e "\n${Combo_Text}--- ${Text_Yellow}A1 ${Combo_Text}---${No_Color}"
 		cat $output_file | grep -i a1 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
 		cat $output_file | grep -i a1 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
 		cat $output_file | grep -i a1 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
 
-		echo -e "\n${BLUE}${BOLD}${UNDERLINE}--- ${YELLOW}A2 ${BLUE}${BOLD}${UNDERLINE}---${NC}"
+		echo -e "\n${Combo_Text}--- ${Text_Yellow}A2 ${Combo_Text}---${No_Color}"
 		cat $output_file | grep -i a2 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
 		cat $output_file | grep -i a2 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
 		cat $output_file | grep -i a2 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
 
-		echo -e "\n${BLUE}${BOLD}${UNDERLINE}--- ${YELLOW}B1 ${BLUE}${BOLD}${UNDERLINE}---${NC}"
+		echo -e "\n${Combo_Text}--- ${Text_Yellow}B1 ${Combo_Text}---${No_Color}"
 		cat $output_file | grep -i b1 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
 		cat $output_file | grep -i b1 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
 		cat $output_file | grep -i b1 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
 
-		echo -e "\n${BLUE}${BOLD}${UNDERLINE}--- ${YELLOW}B2 ${BLUE}${BOLD}${UNDERLINE}---${NC}"
+		echo -e "\n${Combo_Text}--- ${Text_Yellow}B2 ${Combo_Text}---${No_Color}"
 		cat $output_file | grep -i b2 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
 		cat $output_file | grep -i b2 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
 		cat $output_file | grep -i b2 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
 
-		echo -e "\n${BLUE}${BOLD}${UNDERLINE}--- ${YELLOW}B3 ${BLUE}${BOLD}${UNDERLINE}---${NC}"
+		echo -e "\n${Combo_Text}--- ${Text_Yellow}B3 ${Combo_Text}---${No_Color}"
 		cat $output_file | grep -i b3 | grep -i morning | awk -F: '{print $1",", $2",",  "6AM - 3PM"}'
 		cat $output_file | grep -i b3 | grep -i mid | awk -F: '{print $1",", $2",",  "2PM - 11PM"}'
 		cat $output_file | grep -i b3 | grep -i night | awk -F: '{print $1",", $2",",  "10PM - 7AM"}'
 
-		echo -e "\n${RED}Exiting..."
+		echo -e "\n${Text_Red}Exiting..."
 		exit 0
 	fi
 
+	if [[ "$name" == "DELETE" ]]; then
+   	>$output_file
+   	exit 0
+   	fi
+
 	# Validate shift input
 	while true; do
-		read -p "$(echo -e "\n${GREEN}${BOLD}Enter Shift ${YELLOW}(MORNING, MID, NIGHT)${NC}: ")" shift
+		read -p "$(echo -e "\n${Bold_Green}Enter Shift ${Text_Yellow}(MORNING, MID, NIGHT)${No_Color}: ")" shift
 		shift=$(echo "$shift" | tr '[:lower:]' '[:upper:]')
 
 		if [[ "$shift" == "MORNING" || "$shift" == "MID" || "$shift" == "NIGHT" ]]; then
 			break
 		else
-			echo -e "\n${RED}INVALID SHIFT! Please enter a valid shift code ${NC}(e.g., ${YELLOW}MORNING, MID, NIGHT.${NC})."
-			echo -e "\n${RED}Exiting..."
+			echo -e "\n${Text_Red}INVALID SHIFT! Please enter a valid shift code ${No_Color}(e.g., ${Text_Yellow}MORNING, MID, NIGHT.${No_Color})."
+			echo -e "\n${Text_Red}Exiting..."
 			exit 1
 		fi
 	done
 
 	# Validate team input
 	while true; do
-		read -p "$(echo -e "\n${GREEN}${BOLD}Enter Team ${YELLOW}(A1,A2,B1.B2,B3)${NC}: ")" team
+		read -p "$(echo -e "\n${Bold_Green}Enter Team ${Text_Yellow}(A1,A2,B1.B2,B3)${No_Color}: ")" team
 		team=$(echo "$team" | tr '[:lower:]' '[:upper:]')
 
 		if [[ "$team" == "A1" || "$team" == "A2" || "$team" == "B1" || "$team" == "B2" || "$team" == "B3" ]]; then
-			echo -e "${BLUE}${BOLD}${UNDERLINE}=============================${NC}"
+			echo -e "${Combo_Text}=============================${No_Color}"
 			break
 		else
-			echo -e "\n${RED}INVALID TEAM! PLEASE ENTER A VALID TEAM CODE ${NC}(e.g., ${YELLOW}A1, B2, etc.${NC})."
-			echo -e "\n${RED}Exiting..."
+			echo -e "\n${Text_Red}INVALID TEAM! PLEASE ENTER A VALID TEAM CODE ${No_Color}(e.g., ${Text_Yellow}A1, B2, etc.${No_Color})."
+			echo -e "\n${Text_Red}Exiting..."
 			exit 1
 		fi
 	done
@@ -119,10 +126,10 @@ while true; do
 		encoded_data=$(encode_data "$name" "$shift" "$team")
 		echo "$encoded_data" >>$output_file
 
-		echo -e "\n${GREEN}DATA ENCODED AND STORED. ${THUMBS_UP}"
+		echo -e "\n${Text_Green}DATA ENCODED AND STORED. ${Thumbs_up}"
 	else
-		echo -e "\n${RED}CANNOT ADD MORE PEOPLE TO ${YELLOW} $team ${RED}IN ${YELLOW}$shift ${RED}SHIFT."
-		echo -e "\n${RED}Exiting..."
+		echo -e "\n${Text_Red}CANNOT ADD MORE PEOPLE TO ${Text_Yellow} $team ${Text_Red}IN ${Text_Yellow}$shift ${Text_Red}SHIFT."
+		echo -e "\n${Text_Red}Exiting..."
 		exit 1
 	fi
 
