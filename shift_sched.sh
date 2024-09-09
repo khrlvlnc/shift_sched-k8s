@@ -49,7 +49,6 @@ total_count() {
 
 }
 	echo -e "\n ${Text_Green}To print all inputs, type ${Text_Red}PRINT"
-	echo -e "\n ${Text_Green}To clear data, type ${Text_Red}DELETE"
 
 
 while true; do
@@ -89,10 +88,7 @@ while true; do
 		exit 0
 	fi
 
-	if [[ "$name" == "DELETE" ]]; then
-   	>$output_file
-   	exit 0
-   	fi
+
 
 	# Validate shift input
 	while true; do
