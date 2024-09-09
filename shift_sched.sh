@@ -48,7 +48,10 @@ total_count() {
 	echo "$total"
 
 }
-	echo 'To delete, type "Delete"'
+	echo -e "\n ${Text_Green}To print all inputs, type ${Text_Red}PRINT"
+	echo -e "\n ${Text_Green}To clear data, type ${Text_Red}DELETE"
+
+
 while true; do
 
 	read -p "$(echo -e "\n${Combo_Text}=============================${No_Color}\n${Bold_Green}Enter Name:${No_Color} ")" name
