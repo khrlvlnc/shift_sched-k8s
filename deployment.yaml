@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bash-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: bash-app
+  template:
+    metadata:
+      labels:
+        app: bash-app
+    spec:
+      containers:
+      - name: bash-app-container
+        image: maximolds/mini_project_test:v1   # Use the puushed Docker image
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - name: app-storage
+            mountPath: /app/data   # Mount the volume where data is shared
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: app-pvc
