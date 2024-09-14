@@ -30,11 +30,9 @@ WORKDIR /app
 
 # Copy script and assets
 COPY shift_sched.sh /app/shift_sched.sh
-COPY assets /app/assets
 
 # Make script executable
 RUN chmod +x /app/shift_sched.sh
-RUN chmod +x /app/assets/*
 
 # Expose port for ttyd
 EXPOSE 8080
