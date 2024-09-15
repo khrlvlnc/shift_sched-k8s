@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: bash-app-service
+  name: mini-project-service
 spec:
   selector:
-    app: bash-app
+    app: mini-project 
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
-  type: NodePort
+      port: 8080  
+      targetPort: 8080  
+  type: ClusterIP  
