@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: app-pv
+  name: mini-project-persistent-volume
 spec:
   capacity:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/app"   # Replace with actual path on the Kubernetes node
+    path: "/data"   # Replace with actual path on the Kubernetes node
