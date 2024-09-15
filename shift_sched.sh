@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # File to store encoded data
-output_file="input.txt"
+output_file="/app/data/input.txt"
 
 # Function to encode the input
 encode_data() {
