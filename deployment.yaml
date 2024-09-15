@@ -1,26 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bash-app
+  name: mini-project-deployment
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: bash-app
+      app: mini-project
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate      
   template:
     metadata:
       labels:
-        app: bash-app
+        app: mini-project
     spec:
       containers:
-      - name: bash-app-container
-        image: maximolds/mini_project_test:v1   # Use the puushed Docker image
+      - name: mini-project-container
+        image: masterdocker05/shift-script:latest  # Use the puushed Docker image
         ports:
           - containerPort: 8080
         volumeMounts:
-          - name: app-storage
+          - name: mini-project-storage
             mountPath: /app/data   # Mount the volume where data is shared
       volumes:
-        - name: app-storage
+        - name: mini-project-storage
           persistentVolumeClaim:
-            claimName: app-pvc
+            claimName: mini-project-pvc
