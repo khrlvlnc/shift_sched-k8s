@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mini-project-deployment-canary
+spec:
+  replicas: 1  # Only 1 replica for the Canary release
+  selector:
+    matchLabels:
+      app: mini-project
+      version: canary
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mini-project
+        version: canary
+    spec:
+      containers:
+        - name: mini-project-container
+          image: maximolds/mini_project_test:2.0  # Canary version of the image
+          ports:
+            - containerPort: 7000
+          volumeMounts:
+            - name: mini-project-storage
+              mountPath: /app/data   # Mount the volume where data is shared
+      volumes:
+        - name: mini-project-storage
+          persistentVolumeClaim:
+            claimName: mini-project-pvc
