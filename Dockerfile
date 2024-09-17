@@ -35,8 +35,8 @@ COPY shift_sched.sh /app/shift_sched.sh
 RUN chmod +x /app/shift_sched.sh
 
 # Expose port for ttyd
-EXPOSE 8080
+EXPOSE 7000
 
 # Run the script using ttyd
-CMD ["ttyd", "--writable", "-p", "8080", "bash", "./shift_sched.sh"]
+CMD ["ttyd", "--writable", "-p", "7000", "bash", "./shift_sched.sh"]
 

@@ -21,7 +21,7 @@ spec:
         - name: mini-project-container
           image: masterdocker05/shift-script:latest  # Use the pushed Docker image
           ports:
-            - containerPort: 8080
+            - containerPort: 7000
           volumeMounts:
             - name: mini-project-storage
               mountPath: /app/data   # Mount the volume where data is shared
@@ -62,6 +62,7 @@ spec:
     app: mini-project 
   ports:
     - protocol: TCP
-      port: 8080  
-      targetPort: 8080  
-  type: ClusterIP
+      port: 7000  
+      targetPort: 7000
+      nodePort: 30000 
+  type: NodePort
