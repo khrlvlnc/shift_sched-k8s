@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: mini-project-container
-          image: masterdocker05/shift-script:latest  # Use the pushed Docker image
+          image: maximolds/mini_project_test  # Use the pushed Docker image
           ports:
             - containerPort: 7000
           volumeMounts:
