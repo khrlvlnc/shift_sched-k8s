@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage ("Checkout") {
             steps {
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'maximolds', url: 'https://github.com/maximolds/testing.git']])
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'maximolds', url: 'https://github.com/maximolds/shift_sched.git']])
                 sh 'ls -al'  // Verify the file is checked out
             }
         }
