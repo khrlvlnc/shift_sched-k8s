@@ -64,5 +64,5 @@ spec:
     - protocol: TCP
       port: 7000  
       targetPort: 7000
-      nodePort: 30000 
+      nodePort: 30001 
   type: NodePort
